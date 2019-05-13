@@ -8,11 +8,13 @@ namespace SalesWeb.Models
 {
     public class SalesWebContext : DbContext
     {
-        public SalesWebContext (DbContextOptions<SalesWebContext> options)
+        public SalesWebContext(DbContextOptions<SalesWebContext> options)
             : base(options)
         {
         }
 
-        public DbSet<SalesWeb.Models.Departament> Departament { get; set; }
+        public DbSet<Departament> Departament { get; set; }
+        public DbSet<Saller> Saller{get;set;}
+        public DbSet <SalesRecord> SalesRecords { get; set; }
     }
 }
