@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SalesWeb.Models;
+using SalesWeb.Models.ViewModels;
 using SalesWeb.Services;
 
 namespace SalesWeb.Controllers
@@ -11,11 +12,12 @@ namespace SalesWeb.Controllers
     public class SallersController : Controller
     {
         private readonly SallerServices _sallerServices;
-       
+        private readonly DerpartamentService _derpartamentService;
 
-        public SallersController (SallerServices sallerServices)
+        public SallersController (SallerServices sallerServices, DerpartamentService derpartamentService)
         {
             _sallerServices = sallerServices;
+            _derpartamentService = derpartamentService;
         }
         public IActionResult Index()
         {
@@ -26,7 +28,9 @@ namespace SalesWeb.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departaments = _derpartamentService.FindAll();
+            var viewModel = new SallerFormViewModel { Departaments = departaments };
+            return View(viewModel);
           
         }
         [HttpPost]
