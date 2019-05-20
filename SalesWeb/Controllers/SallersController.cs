@@ -59,7 +59,7 @@ namespace SalesWeb.Controllers
         public IActionResult Delete( int id)
         {
             _sallerServices.Remove(id);
-            return RedirectToAction(); 
+            return RedirectToAction(nameof(Index)); 
         }
     }
 }
