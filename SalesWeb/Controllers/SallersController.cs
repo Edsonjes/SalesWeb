@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -46,12 +47,12 @@ namespace SalesWeb.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new {message = "Id not found" });
             }
             var obj = _sallerServices.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             return View(obj);
         }
@@ -66,12 +67,12 @@ namespace SalesWeb.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             var obj = _sallerServices.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             return View(obj);
         }
@@ -80,12 +81,12 @@ namespace SalesWeb.Controllers
         {
             if ( id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             var obj = _sallerServices.FindById(id.Value);
             if(obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             List<Departament> departaments = _derpartamentService.FindAll();
             SallerFormViewModel viewModel = new SallerFormViewModel { Saller = obj, Departaments = departaments };
@@ -106,15 +107,23 @@ namespace SalesWeb.Controllers
                 _sallerServices.Update(saller);
             return RedirectToAction(nameof(Index));
             }
-            catch ( NotFoundException)
+            catch ( NotFoundException e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch (DbConcurrencyException)
-            {
-                return BadRequest();
-            }
+           
         }
+
+        public IActionResult Error (string massage)
+        {
+            var viewModel = new ErrorViewModel
+            {
+                Massage = massage,
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(viewModel);
+        }
+
                       
     }
 }
