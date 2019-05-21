@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesWeb.Models
 {
@@ -12,6 +13,7 @@ namespace SalesWeb.Models
         public  int  Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        [Display]
         public DateTime BirthDate { get; set; }
         public double BaseSalary { get; set; }
         public Departament Deparment { get; set; }
